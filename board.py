@@ -7,8 +7,8 @@ class Frame:
     self.__width = width
     self.__height = height
     self.__paddings = padding
-    self.__current = [[0 for i in range(width)] for j in range(height)]
-    self.__snapshot = [[0 for i in range(width)] for j in range(height)]
+    self.__background = [[0 for i in range(width)] for j in range(height)]
+    self.__score = 0
     self.__stdscr = curses.initscr()
     curses.cbreak()
     curses.curs_set(0)
@@ -22,7 +22,7 @@ class Frame:
       self.__stdscr.move(self.__paddings[1] + y, self.__paddings[0])
       self.__stdscr.addstr('<!')
       for x in range(self.__width):
-        if self.__current[y][x] == 1:
+        if self.__background[y][x] == 1:
           self.__stdscr.addstr('[].')
         else:
           self.__stdscr.addstr('  .')
@@ -34,6 +34,10 @@ class Frame:
 
   def __del__(self):
     curses.endwin()
+    print(self.__score)
+
+  def background(self):
+    return self.__background
 
   def __setitem__(self, coords, value):
     if coords[0] >= self.__width or coords[1] >= self.__height or len(
@@ -44,12 +48,19 @@ class Frame:
     for y, line in enumerate(shape):
       for x, el in enumerate(line):
         if (y + coords[1]) < self.__height and (x + coords[0]) < self.__width:
-          self.__current[y + coords[1]][x + coords[0]] = int(el and mark)
           self.__stdscr.move(coords[1] + self.__paddings[1] + y,
                              (coords[0] + x) * 3 + self.__paddings[0] + 2)
           if el:
             self.__stdscr.addstr(block)
     self.__stdscr.refresh()
+
+  def __getitem__(self, coords):
+    x, y = coords
+    if self.__stdscr.inch(self.__paddings[1] + y,
+                          self.__paddings[0] + 2 + x * 3) == 32:
+      return 0
+    else:
+      return 1
 
   def shape_fits(self, shape, coords):
     if coords[0] + len(shape[0]) > self.__width or \
@@ -58,32 +69,32 @@ class Frame:
       return False
     for y, line in enumerate(shape):
       for x, el in enumerate(line):
-        if el and self.__snapshot[coords[1] + y][coords[0] + x]:
+        if el and self.__background[coords[1] + y][coords[0] + x]:
           return False
     return True
 
-  def take_snapshot(self):
-    self.__snapshot = [[self.__current[j][i] for i in range(self.__width)]
-                       for j in range(self.__height)]
-
-  # this seems not to work properly
-  def remove_filled_lines(self):
-    # refresh = False
+  def update_background(self):
     for y in range(self.__height):
-      if all(item == 1 for item in self.__current[y]):
-        # refresh = True
+      for x in range(self.__width):
+        self.__background[y][x] = self[x, y]
+
+  def remove_filled_lines(self):
+    bck_copy = []
+    deleted_rows = 0
+    for y in range(self.__height):
+      if all(item == 1 for item in self.__background[y]):
         for x in range(self.__width):
-          self.__current[y][x] = 0
+          # self.__background[y][x] = 0
           self.__stdscr.move(self.__paddings[1] + y,
-                       self.__paddings[0] + 2 + x*3)
+                             self.__paddings[0] + 2 + x * 3)
           self.__stdscr.addstr("  .")
-      # if refresh:
-      #   non_zero_rows = []
-      #   for i in range(len(self.__current)-1, -1, -1):
-      #     if all(item == 0 for item in self.__current[i]):
-      #       removed_row = self.__current.pop(i)
-      #     else:
-      #       non_zero_rows = [self.__current[i]] + non_zero_rows
-      #       self.__current[i] = self.__current[i-1]
-      #   self.__current = non_zero_rows + [removed_row]
-      #   self.print()
+        deleted_rows += 1
+      else:
+        bck_copy.append(self.__background[y])
+    for _ in range(deleted_rows):
+      bck_copy.insert(0, [0] * self.__width)
+    self.__background = bck_copy
+    self.__score += 40 * deleted_rows + 60 * max(
+      0, (deleted_rows - 1)) + 200 * max(0, (deleted_rows - 2)) + 900 * max(
+        0, (deleted_rows - 3))
+    self.print()

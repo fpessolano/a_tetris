@@ -3,7 +3,7 @@ About:      an ASCII-based tetris game
 Author:     F. Pessolano  
 Version:    n/a
 
-NOTE:       in progress, bit functional   
+NOTE:       in progress, not functional, see https://replit.com/@whileTRUEpass/atetris for the latest code  
 
 
 **Description**  

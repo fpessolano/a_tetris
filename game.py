@@ -15,16 +15,16 @@ class Tetris:
     self.__frame_pause = frame_pause
     self.__stdscr.keypad(True)
     self.__stdscr.nodelay(True)
-    
+
   def __del__(self):
-    del(self.__frame)
+    del (self.__frame)
 
   def drop_new_shape(self):
     x = self.__width // 2
     y = 0
     shape = sp.Shapes()
+    self.__frame.update_background()
     self.__frame.remove_filled_lines()
-    self.__frame.take_snapshot()
 
     while True:
       self.__frame[x, y] = [True, shape.object()]
@@ -54,7 +54,12 @@ class Tetris:
           y += 1
           self.__frame[x, y] = [True, shape.object()]
         elif key == 27:
-          quit()
+          # this is for debugging
+          # test = self.__frame.value()
+          del self.__frame
+          # import pprint as pp
+          # pp.pprint(test)
+          exit()
       if not self.__frame.shape_fits(shape.object(), [x, y + 1]):
         break
       self.__frame[x, y] = [False, shape.object()]
