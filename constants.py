@@ -14,12 +14,14 @@ OBJECTS = {
                  [[0, 1, 1], [1, 1, 0]], [[1, 0], [1, 1], [0, 1]]]
 }
 
-WEIGHTS_LEVEL1 = {
-  "line": 2,
-  "square": 2,
-  "elle": 1,
-  "mirrored elle": 1,
-  "half plus": 3,
-  "z": 1,
-  "mirrored z": 1
+LEVEL_WEIGHTS = {
+  0: {
+    "line": 2,
+    "square": 2,
+    "elle": 1,
+    "mirrored elle": 1,
+    "half plus": 3,
+    "z": 1,
+    "mirrored z": 1
+  }
 }

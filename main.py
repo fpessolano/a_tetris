@@ -1,6 +1,7 @@
-import game
+import tetris
 
-new_gate = game.Tetris()
 
-while True:
-  new_gate.drop_new_shape()
+new_gate = tetris.Tetris()
+
+while new_gate.drop_new_shape():
+  pass

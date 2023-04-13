@@ -6,9 +6,8 @@ class Frame:
   def __init__(self, width, height, padding=[15, 3]):
     self.__width = width
     self.__height = height
-    self.__paddings = padding
+    self.__paddings = [max(15, padding[0]), max(3, padding[1])]
     self.__background = [[0 for i in range(width)] for j in range(height)]
-    self.__score = 0
     self.__stdscr = curses.initscr()
     curses.cbreak()
     curses.curs_set(0)
@@ -17,7 +16,7 @@ class Frame:
   def stdscr(self):
     return self.__stdscr, [self.__width, self.__height], self.__paddings
 
-  def print(self):
+  def print_board(self):
     for y in range(self.__height):
       self.__stdscr.move(self.__paddings[1] + y, self.__paddings[0])
       self.__stdscr.addstr('<!')
@@ -30,11 +29,20 @@ class Frame:
     self.__stdscr.move(self.__paddings[1] + self.__height,
                        self.__paddings[0] + 2)
     self.__stdscr.addstr(''.join(['=' for i in range(3 * self.__width)]))
+
+  def print_score(self, score):
+    self.__stdscr.move(self.__paddings[1] + 3, 2)
+    self.__stdscr.addstr('Score:')
+    self.__stdscr.move(self.__paddings[1] + 5, 2)
+    self.__stdscr.addstr(str(score))
     self.__stdscr.refresh()
+
+  def print_next_shape(self, shape):
+    # to be done !!!
+    pass
 
   def __del__(self):
     curses.endwin()
-    print(self.__score)
 
   def background(self):
     return self.__background
@@ -94,7 +102,5 @@ class Frame:
     for _ in range(deleted_rows):
       bck_copy.insert(0, [0] * self.__width)
     self.__background = bck_copy
-    self.__score += 40 * deleted_rows + 60 * max(
-      0, (deleted_rows - 1)) + 200 * max(0, (deleted_rows - 2)) + 900 * max(
-        0, (deleted_rows - 3))
-    self.print()
+    return deleted_rows
+

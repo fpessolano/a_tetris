@@ -1,5 +1,5 @@
 import curses
-import board
+import graphics
 import shapes as sp
 import time
 
@@ -7,12 +7,15 @@ import time
 class Tetris:
 
   def __init__(self, width=10, height=20, frame_pause=0.4):
-    self.__frame = board.Frame(width, height)
-    self.__frame.print()
+    self.__frame = graphics.Frame(width, height)
+    self.__frame.print_board()
     self.__stdscr, _, self.__board_padding = self.__frame.stdscr()
     self.__width = width
     self.__height = height
     self.__frame_pause = frame_pause
+    self.__level = 0
+    self.__score = 0
+    self.__shape = sp.Shapes(self.__level)
     self.__stdscr.keypad(True)
     self.__stdscr.nodelay(True)
 
@@ -24,7 +27,13 @@ class Tetris:
     y = 0
     shape = sp.Shapes()
     self.__frame.update_background()
-    self.__frame.remove_filled_lines()
+    deleted_rows = self.__frame.remove_filled_lines()
+    self.__score += 40 * deleted_rows + 60 * max(
+      0, (deleted_rows - 1)) + 200 * max(0, (deleted_rows - 2)) + 900 * max(
+        0, (deleted_rows - 3))
+    self.__frame.print_board()
+    self.__frame.print_score(self.__score)
+    self.__frame.print_next_shape(next(shape))
 
     while True:
       self.__frame[x, y] = [True, shape.object()]
@@ -59,8 +68,11 @@ class Tetris:
           del self.__frame
           # import pprint as pp
           # pp.pprint(test)
-          exit()
+          print("Thanks for playing the pre-beta")
+          return False
       if not self.__frame.shape_fits(shape.object(), [x, y + 1]):
         break
       self.__frame[x, y] = [False, shape.object()]
       y += 1
+
+    return True
