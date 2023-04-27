@@ -25,7 +25,6 @@ class Tetris:
   def drop_new_shape(self):
     x = self.__width // 2
     y = 0
-    shape = sp.Shapes()
     self.__frame.update_background()
     deleted_rows = self.__frame.remove_filled_lines()
     self.__score += 40 * deleted_rows + 60 * max(
@@ -33,35 +32,36 @@ class Tetris:
         0, (deleted_rows - 3))
     self.__frame.print_board()
     self.__frame.print_score(self.__score)
-    self.__frame.print_next_shape(shape.next_object())
+    self.__frame.print_level(self.__level)
+    self.__frame.print_next_shape(self.__shape.next_object())
 
     while True:
-      self.__frame[x, y] = [True, shape.object()]
+      self.__frame[x, y] = [True, self.__shape.object()]
       end_time = time.time() + self.__frame_pause
       while time.time() < end_time:
         key = self.__stdscr.getch()
         if key == curses.KEY_LEFT and self.__frame.shape_fits(
-            shape.object(), [x - 1, y]):
-          self.__frame[x, y] = [False, shape.object()]
+            self.__shape.object(), [x - 1, y]):
+          self.__frame[x, y] = [False, self.__shape.object()]
           x -= 1
-          self.__frame[x, y] = [True, shape.object()]
+          self.__frame[x, y] = [True, self.__shape.object()]
         elif key == curses.KEY_RIGHT and self.__frame.shape_fits(
-            shape.object(), [x + 1, y]):
-          self.__frame[x, y] = [False, shape.object()]
+            self.__shape.object(), [x + 1, y]):
+          self.__frame[x, y] = [False, self.__shape.object()]
           x += 1
-          self.__frame[x, y] = [True, shape.object()]
+          self.__frame[x, y] = [True, self.__shape.object()]
         elif key == curses.KEY_UP:
-          previous_object = shape.object()
-          if self.__frame.shape_fits(shape.next(), [x, y]):
+          previous_object = self.__shape.object()
+          if self.__frame.shape_fits(self.__shape.next(), [x, y]):
             self.__frame[x, y] = [False, previous_object]
-            self.__frame[x, y] = [True, shape.object()]
+            self.__frame[x, y] = [True, self.__shape.object()]
           else:
-            shape.prev()
+            self.__shape.prev()
         elif key == curses.KEY_DOWN and self.__frame.shape_fits(
-            shape.object(), [x, y + 1]):
-          self.__frame[x, y] = [False, shape.object()]
+            self.__shape.object(), [x, y + 1]):
+          self.__frame[x, y] = [False, self.__shape.object()]
           y += 1
-          self.__frame[x, y] = [True, shape.object()]
+          self.__frame[x, y] = [True, self.__shape.object()]
         elif key == 27:
           # this is for debugging
           # test = self.__frame.value()
@@ -70,16 +70,16 @@ class Tetris:
           # pp.pprint(test)
           print("Thanks for playing the pre-beta")
           return False
-      if not self.__frame.shape_fits(shape.object(), [x, y + 1]):
+      if not self.__frame.shape_fits(self.__shape.object(), [x, y + 1]):
         if y == 0:
           self.game_over()
           return False
         else:
           break
-      self.__frame[x, y] = [False, shape.object()]
+      self.__frame[x, y] = [False, self.__shape.object()]
       y += 1
 
-    next(shape)
+    next(self.__shape)
     return True
 
   def game_over(self):

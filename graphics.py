@@ -1,6 +1,5 @@
 import curses
 
-# next piece is wrong ....
 
 class Frame:
 
@@ -12,6 +11,7 @@ class Frame:
     self.__stdscr = curses.initscr()
     curses.cbreak()
     curses.curs_set(0)
+    curses.noecho()
     self.__stdscr.refresh()
 
   def stdscr(self):
@@ -38,16 +38,25 @@ class Frame:
     self.__stdscr.addstr(str(score))
     self.__stdscr.refresh()
 
+  def print_level(self, level):
+    self.__stdscr.move(self.__paddings[1] + 1,
+                       self.__paddings[0] + 3 * self.__width + 8)
+    self.__stdscr.addstr('Level:')
+    self.__stdscr.move(self.__paddings[1] + 3,
+                       self.__paddings[0] + 3 * self.__width + 8)
+    self.__stdscr.addstr(str(level))
+    self.__stdscr.refresh()
+
   def print_next_shape(self, shape, max_shape_size=5):
     for y in range(max_shape_size):
       for x in range(max_shape_size):
-        self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x*2)
+        self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x * 2)
         self.__stdscr.addstr('  ')
     self.__stdscr.move(self.__paddings[1] + 5, 2)
     self.__stdscr.addstr('Next shape:')
     for y in range(len(shape)):
       for x in range(len(shape[y])):
-        self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x*2)
+        self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x * 2)
         if shape[y][x]:
           self.__stdscr.addstr('[]')
         else:
@@ -115,9 +124,3 @@ class Frame:
       bck_copy.insert(0, [0] * self.__width)
     self.__background = bck_copy
     return deleted_rows
-
-
-    
-
-  
-

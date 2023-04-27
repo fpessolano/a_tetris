@@ -1,16 +1,13 @@
-"""
- what needs to change:
-  - graphics needs to be split into a container class, a score class, a board class and a debug class. Container is the top level while the others are just curse pads
-  - the container will manage the pads, the game will manage the the container
-  - the container will have a non blocking getch on all pads to avoid game control issues
-  - debug one is optional
-
-"""
-
 import tetris
+import pyfiglet
+
+ascii_banner = pyfiglet.figlet_format("ASCII Tetris !!")
+print(ascii_banner)
+print("\t\t\t\t\tVersion 0.3")
+print("\t\t\t\t\tby whileTRUEpass\n\n")
+_ = input("\t\t\t\t\tPress enter to play...")
 
 new_gate = tetris.Tetris()
 
 while new_gate.drop_new_shape():
- pass
-
+  pass
