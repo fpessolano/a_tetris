@@ -35,7 +35,7 @@ class Shapes:
     return self.__current_object[self.__cursor]
 
   def next_object(self):
-    return self.__next_object
+    return self.__next_object[self.__cursor_next_object]
 
   def __next__(self):
     self.__current_object = self.__next_object

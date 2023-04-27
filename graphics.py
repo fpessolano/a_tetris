@@ -1,5 +1,6 @@
 import curses
 
+# next piece is wrong ....
 
 class Frame:
 
@@ -31,15 +32,27 @@ class Frame:
     self.__stdscr.addstr(''.join(['=' for i in range(3 * self.__width)]))
 
   def print_score(self, score):
-    self.__stdscr.move(self.__paddings[1] + 3, 2)
+    self.__stdscr.move(self.__paddings[1] + 1, 2)
     self.__stdscr.addstr('Score:')
-    self.__stdscr.move(self.__paddings[1] + 5, 2)
+    self.__stdscr.move(self.__paddings[1] + 3, 2)
     self.__stdscr.addstr(str(score))
     self.__stdscr.refresh()
 
-  def print_next_shape(self, shape):
-    # to be done !!!
-    pass
+  def print_next_shape(self, shape, max_shape_size=5):
+    for y in range(max_shape_size):
+      for x in range(max_shape_size):
+        self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x*2)
+        self.__stdscr.addstr('  ')
+    self.__stdscr.move(self.__paddings[1] + 5, 2)
+    self.__stdscr.addstr('Next shape:')
+    for y in range(len(shape)):
+      for x in range(len(shape[y])):
+        self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x*2)
+        if shape[y][x]:
+          self.__stdscr.addstr('[]')
+        else:
+          self.__stdscr.addstr('  ')
+    self.__stdscr.refresh()
 
   def __del__(self):
     curses.endwin()
@@ -92,7 +105,6 @@ class Frame:
     for y in range(self.__height):
       if all(item == 1 for item in self.__background[y]):
         for x in range(self.__width):
-          # self.__background[y][x] = 0
           self.__stdscr.move(self.__paddings[1] + y,
                              self.__paddings[0] + 2 + x * 3)
           self.__stdscr.addstr("  .")
@@ -103,4 +115,9 @@ class Frame:
       bck_copy.insert(0, [0] * self.__width)
     self.__background = bck_copy
     return deleted_rows
+
+
+    
+
+  
 

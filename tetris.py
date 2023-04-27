@@ -6,7 +6,7 @@ import time
 
 class Tetris:
 
-  def __init__(self, width=10, height=20, frame_pause=0.4):
+  def __init__(self, width=10, height=15, frame_pause=0.4):
     self.__frame = graphics.Frame(width, height)
     self.__frame.print_board()
     self.__stdscr, _, self.__board_padding = self.__frame.stdscr()
@@ -20,7 +20,7 @@ class Tetris:
     self.__stdscr.nodelay(True)
 
   def __del__(self):
-    del (self.__frame)
+    del(self.__frame)
 
   def drop_new_shape(self):
     x = self.__width // 2
@@ -33,7 +33,7 @@ class Tetris:
         0, (deleted_rows - 3))
     self.__frame.print_board()
     self.__frame.print_score(self.__score)
-    self.__frame.print_next_shape(next(shape))
+    self.__frame.print_next_shape(shape.next_object())
 
     while True:
       self.__frame[x, y] = [True, shape.object()]
@@ -71,8 +71,18 @@ class Tetris:
           print("Thanks for playing the pre-beta")
           return False
       if not self.__frame.shape_fits(shape.object(), [x, y + 1]):
-        break
+        if y == 0:
+          self.game_over()
+          return False
+        else:
+          break
       self.__frame[x, y] = [False, shape.object()]
       y += 1
 
+    next(shape)
     return True
+
+  def game_over(self):
+    del(self.__frame)
+    print("GAMEOVER! Thanks for playing the pre-beta.")
+    print(f'Your score is {self.__score}')
