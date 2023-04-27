@@ -43,8 +43,18 @@ class Frame:
                        self.__paddings[0] + 3 * self.__width + 8)
     self.__stdscr.addstr('Level:')
     self.__stdscr.move(self.__paddings[1] + 3,
-                       self.__paddings[0] + 3 * self.__width + 8)
+                       self.__paddings[0] + 3 * self.__width + 10)
     self.__stdscr.addstr(str(level))
+    self.__stdscr.refresh()
+
+  def pause(self, on=True):
+    if on:
+      text = "PAUSED"
+    else:
+      text = "      "
+    self.__stdscr.move(self.__paddings[1] + 5,
+                       self.__paddings[0] + 3 * self.__width + 8)
+    self.__stdscr.addstr(text)
     self.__stdscr.refresh()
 
   def print_next_shape(self, shape, max_shape_size=5):

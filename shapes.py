@@ -37,6 +37,10 @@ class Shapes:
   def next_object(self):
     return self.__next_object[self.__cursor_next_object]
 
+  def level_up(self):
+    if self.__level < len(c.LEVEL_WEIGHTS.keys()) - 1:
+      self.__level += 1
+
   def __next__(self):
     self.__current_object = self.__next_object
     self.__cursor = self.__cursor_next_object

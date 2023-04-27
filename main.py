@@ -6,6 +6,7 @@ print(ascii_banner)
 print("\t\t\t\t\tVersion 0.3")
 print("\t\t\t\t\tby whileTRUEpass\n\n")
 _ = input("\t\t\t\t\tPress enter to play...")
+print("\033[H\033[J", end="")
 
 new_gate = tetris.Tetris()
 

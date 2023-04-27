@@ -2,6 +2,7 @@ import curses
 import graphics
 import shapes as sp
 import time
+import constants as c
 
 
 class Tetris:
@@ -32,6 +33,9 @@ class Tetris:
         0, (deleted_rows - 3))
     self.__frame.print_board()
     self.__frame.print_score(self.__score)
+    if self.__score > c.LEVEL_THRESHOLD[self.__level]:
+      self.__shape.level_up()
+      self.__level += 1
     self.__frame.print_level(self.__level)
     self.__frame.print_next_shape(self.__shape.next_object())
 
@@ -70,6 +74,13 @@ class Tetris:
           # pp.pprint(test)
           print("Thanks for playing the pre-beta")
           return False
+        elif key == 32:
+          self.__frame.pause()
+          while True:
+            key = self.__stdscr.getch()
+            if key == 32:
+              self.__frame.pause(False)
+              break
       if not self.__frame.shape_fits(self.__shape.object(), [x, y + 1]):
         if y == 0:
           self.game_over()
@@ -85,4 +96,4 @@ class Tetris:
   def game_over(self):
     del(self.__frame)
     print("GAMEOVER! Thanks for playing the pre-beta.")
-    print(f'Your score is {self.__score}')
+    print(f'Your score is {self.__score} and your level is {self.__level}')

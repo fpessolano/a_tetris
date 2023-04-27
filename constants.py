@@ -11,8 +11,16 @@ OBJECTS = {
                                                            [0, 1, 1]],
         [[0, 1], [1, 1], [1, 0]]],
   "mirrored z": [[[0, 1, 1], [1, 1, 0]], [[1, 0], [1, 1], [0, 1]],
-                 [[0, 1, 1], [1, 1, 0]], [[1, 0], [1, 1], [0, 1]]]
+                 [[0, 1, 1], [1, 1, 0]], [[1, 0], [1, 1], [0, 1]]],
+  "cross": [[[0, 1, 0], [1, 1, 1], [0, 1, 0]], [[1, 0, 1], [0, 1, 0],
+                                                [1, 0, 1]]],
+  "dot": [[[1]]],
+  "pento":
+  [[[0, 1, 1], [1, 1, 0], [0, 1, 0]], [[0, 1, 0], [0, 1, 1], [0, 1, 1]],
+   [[0, 0, 1], [1, 1, 0], [1, 0, 1]], [[1, 1, 0], [0, 1, 1], [0, 1, 0]]]
 }
+
+LEVEL_THRESHOLD = [200, 500, 1000]
 
 LEVEL_WEIGHTS = {
   0: {
@@ -22,6 +30,45 @@ LEVEL_WEIGHTS = {
     "mirrored elle": 1,
     "half plus": 3,
     "z": 1,
-    "mirrored z": 1
+    "mirrored z": 1,
+    "cross": 0,
+    "dot": 3,
+    "pento": 0
+  },
+  1: {
+    "line": 2,
+    "square": 1,
+    "elle": 1,
+    "mirrored elle": 1,
+    "half plus": 2,
+    "z": 1,
+    "mirrored z": 1,
+    "cross": 0,
+    "dot": 2,
+    "pento": 0
+  },
+  2: {
+    "line": 1,
+    "square": 1,
+    "elle": 1,
+    "mirrored elle": 1,
+    "half plus": 1,
+    "z": 1,
+    "mirrored z": 1,
+    "cross": 1,
+    "dot": 2,
+    "pento": 0
+  },
+  3: {
+    "line": 2,
+    "square": 1,
+    "elle": 1,
+    "mirrored elle": 1,
+    "half plus": 1,
+    "z": 1,
+    "mirrored z": 1,
+    "cross": 1,
+    "dot": 3,
+    "pento": 1
   }
 }
