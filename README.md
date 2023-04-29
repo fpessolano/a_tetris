@@ -17,12 +17,12 @@ See poetry.lock but be aware that this is bloated with things not needed but as 
 Run main.py (simply RUN in replit)
 
 **Known BUGS**  
- - core game works but next piece displayed is wrong  
+ - randomness is too uncrontrolled causings sometimes pieces not to appear  
 
 **What's next**
 
-***v0.1.0***
- - a first funcional game with some sort of scoring
+***v0.4.0***
+ - variable speed, level colors, better title screen and instruction screen, better randomness
 
 
 

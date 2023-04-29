@@ -6,15 +6,17 @@ import constants as c
 
 
 class Tetris:
-
-  def __init__(self, width=10, height=15, frame_pause=0.4):
+  # frame_pause needs to accelerate towards the end of the level
+  # add splash screen for new level
+  # change color whrn approaching the level end
+  def __init__(self, width=10, height=20):
     self.__frame = graphics.Frame(width, height)
     self.__frame.print_board()
     self.__stdscr, _, self.__board_padding = self.__frame.stdscr()
     self.__width = width
     self.__height = height
-    self.__frame_pause = frame_pause
     self.__level = 0
+    self.__frame_pause = c.LEVEL_SPEED[self.__level]
     self.__score = 0
     self.__shape = sp.Shapes(self.__level)
     self.__stdscr.keypad(True)
@@ -36,6 +38,7 @@ class Tetris:
     if self.__score > c.LEVEL_THRESHOLD[self.__level]:
       self.__shape.level_up()
       self.__level += 1
+      self.__frame_pause = c.LEVEL_SPEED[self.__level]
     self.__frame.print_level(self.__level)
     self.__frame.print_next_shape(self.__shape.next_object())
 
@@ -67,11 +70,7 @@ class Tetris:
           y += 1
           self.__frame[x, y] = [True, self.__shape.object()]
         elif key == 27:
-          # this is for debugging
-          # test = self.__frame.value()
           del self.__frame
-          # import pprint as pp
-          # pp.pprint(test)
           print("Thanks for playing the pre-beta")
           return False
         elif key == 32:

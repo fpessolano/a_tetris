@@ -1,6 +1,8 @@
 import random, time
 import constants as c
 
+# change using periodically randomly lists to make sure all shapes are used
+
 
 def weighted_random_choice(dict, weights):
   weighted_list = []
@@ -11,7 +13,7 @@ def weighted_random_choice(dict, weights):
 
 
 class Shapes:
-
+  # shape, need to check somehow frequency to avoid some blocks appears to often
   def __init__(self, level=0):
     current_time = int(time.time())
     random.seed(current_time)
