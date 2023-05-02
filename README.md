@@ -17,12 +17,9 @@ See poetry.lock but be aware that this is bloated with things not needed but as 
 Run main.py (simply RUN in replit)
 
 **Known BUGS**  
- - randomness is too uncrontrolled causings sometimes pieces not to appear  
+ - n/a
 
-**What's next**
 
-***v0.4.0***
- - variable speed, level colors, better title screen and instruction screen, better randomness
 
 
 

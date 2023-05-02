@@ -9,7 +9,7 @@ class Tetris:
   # frame_pause needs to accelerate towards the end of the level
   # add splash screen for new level
   # change color whrn approaching the level end
-  def __init__(self, width=10, height=20):
+  def __init__(self, width=10, height=15):
     self.__frame = graphics.Frame(width, height)
     self.__frame.print_board()
     self.__stdscr, _, self.__board_padding = self.__frame.stdscr()
