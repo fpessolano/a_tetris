@@ -8,7 +8,7 @@ import constants as c
 class Tetris:
   # frame_pause needs to accelerate towards the end of the level
   # add splash screen for new level
-  # change color whrn approaching the level end
+  # change color when approaching the level end
   def __init__(self, width=10, height=15):
     self.__frame = graphics.Frame(width, height)
     self.__frame.print_board()
@@ -18,6 +18,7 @@ class Tetris:
     self.__level = 0
     self.__frame_pause = c.LEVEL_SPEED[self.__level]
     self.__score = 0
+    self.__line_count = 0
     self.__shape = sp.Shapes(self.__level)
     self.__stdscr.keypad(True)
     self.__stdscr.nodelay(True)
@@ -30,15 +31,20 @@ class Tetris:
     y = 0
     self.__frame.update_background()
     deleted_rows = self.__frame.remove_filled_lines()
+    self.__line_count += deleted_rows
     self.__score += 40 * deleted_rows + 60 * max(
       0, (deleted_rows - 1)) + 200 * max(0, (deleted_rows - 2)) + 900 * max(
         0, (deleted_rows - 3))
     self.__frame.print_board()
     self.__frame.print_score(self.__score)
+    self.__frame.line_count(self.__line_count)
     if self.__score > c.LEVEL_THRESHOLD[self.__level]:
       self.__shape.level_up()
       self.__level += 1
       self.__frame_pause = c.LEVEL_SPEED[self.__level]
+    # else:
+    #   color control TBD
+    #   score_to_levelup =  c.LEVEL_THRESHOLD[self.__level] - self.__score
     self.__frame.print_level(self.__level)
     self.__frame.print_next_shape(self.__shape.next_object())
 

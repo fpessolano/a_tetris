@@ -20,20 +20,20 @@ class Frame:
   def print_board(self):
     for y in range(self.__height):
       self.__stdscr.move(self.__paddings[1] + y, self.__paddings[0])
-      self.__stdscr.addstr('<!')
+      self.__stdscr.addstr("<!")
       for x in range(self.__width):
         if self.__background[y][x] == 1:
-          self.__stdscr.addstr('[].')
+          self.__stdscr.addstr("[].")
         else:
-          self.__stdscr.addstr('  .')
-      self.__stdscr.addstr('!>')
+          self.__stdscr.addstr("  .")
+      self.__stdscr.addstr("!>")
     self.__stdscr.move(self.__paddings[1] + self.__height,
                        self.__paddings[0] + 2)
-    self.__stdscr.addstr(''.join(['=' for i in range(3 * self.__width)]))
+    self.__stdscr.addstr("".join(["=" for i in range(3 * self.__width)]))
 
   def print_score(self, score):
     self.__stdscr.move(self.__paddings[1] + 1, 2)
-    self.__stdscr.addstr('Score:')
+    self.__stdscr.addstr("SCORE")
     self.__stdscr.move(self.__paddings[1] + 3, 2)
     self.__stdscr.addstr(str(score))
     self.__stdscr.refresh()
@@ -41,18 +41,30 @@ class Frame:
   def print_level(self, level):
     self.__stdscr.move(self.__paddings[1] + 1,
                        self.__paddings[0] + 3 * self.__width + 8)
-    self.__stdscr.addstr('Level:')
+    self.__stdscr.addstr("LEVEL")
     self.__stdscr.move(self.__paddings[1] + 3,
                        self.__paddings[0] + 3 * self.__width + 10)
     self.__stdscr.addstr(str(level))
     self.__stdscr.refresh()
 
+  def line_count(self, count):
+    self.__stdscr.move(self.__paddings[1] + 5,
+                       self.__paddings[0] + 3 * self.__width + 8)
+    self.__stdscr.addstr("LINES")
+    self.__stdscr.move(self.__paddings[1] + 7,
+                       self.__paddings[0] + 3 * self.__width + 10)
+    self.__stdscr.addstr(str(count))
+    self.__stdscr.refresh()
+
+  def screen_refresh(self):
+    self.__stdscr.refresh()
+    
   def pause(self, on=True):
     if on:
       text = "PAUSED"
     else:
       text = "      "
-    self.__stdscr.move(self.__paddings[1] + 5,
+    self.__stdscr.move(self.__paddings[1] + 10,
                        self.__paddings[0] + 3 * self.__width + 8)
     self.__stdscr.addstr(text)
     self.__stdscr.refresh()
@@ -61,16 +73,16 @@ class Frame:
     for y in range(max_shape_size):
       for x in range(max_shape_size):
         self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x * 2)
-        self.__stdscr.addstr('  ')
+        self.__stdscr.addstr("  ")
     self.__stdscr.move(self.__paddings[1] + 5, 2)
-    self.__stdscr.addstr('Next shape:')
+    self.__stdscr.addstr("NEXT SHAPE")
     for y in range(len(shape)):
       for x in range(len(shape[y])):
         self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x * 2)
         if shape[y][x]:
-          self.__stdscr.addstr('[]')
+          self.__stdscr.addstr("[]")
         else:
-          self.__stdscr.addstr('  ')
+          self.__stdscr.addstr("  ")
     self.__stdscr.refresh()
 
   def __del__(self):
