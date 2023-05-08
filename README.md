@@ -17,7 +17,7 @@ See poetry.lock but be aware that this is bloated with things not needed but as 
 Run main.py (simply RUN in replit)
 
 **Known BUGS**  
- - there is a nasty bug resulting in the same shape coming out
+ - unfortunatelya free REPLIT account quite slow even for such a simple game
 
 
 

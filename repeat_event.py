@@ -3,7 +3,11 @@ import time
 
 
 class RepeatingFunction:
-
+  """
+    This is a class that takes a list of functions and spwns them as threads.
+    See the test code as example of usage.
+    """
+  
   def __init__(self, func_list, interval=1):
     self.__pause = interval
     self._event = threading.Event()

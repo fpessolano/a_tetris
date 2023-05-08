@@ -2,7 +2,10 @@ import curses
 
 
 class Frame:
-
+  """
+    This is a class that handles the drawing in console of each frame.
+    """
+  
   def __init__(self, width, height, padding=[15, 3], screen=None):
     self.__width = width
     self.__height = height
@@ -88,6 +91,7 @@ class Frame:
 
   def __del__(self):
     self.__stdscr.clear()
+    self.__stdscr.refresh()
     if self.__delete:
       curses.endwin()
 

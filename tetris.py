@@ -6,7 +6,10 @@ import constants as c
 
 
 class Tetris:
-
+  """
+    This is the game core loop (including control and any additional logic).
+    """
+  
   def __init__(self, screen, width=10, height=15):
     self.__frame = graphics.Frame(width=width, height=height, screen=screen)
     self.__frame.print_board()
@@ -89,4 +92,4 @@ class Tetris:
     return True
 
   def score(self):
-    return self.__score, {self.__level}
+    return self.__score, self.__level

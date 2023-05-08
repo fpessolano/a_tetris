@@ -4,7 +4,10 @@ import randict as rd
 
 
 class Shapes:
-
+  """
+    This is a class that handles all shapes including sequences and rotations
+    """
+  
   def __init__(self, level=0):
     current_time = int(time.time())
     random.seed(current_time)

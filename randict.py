@@ -88,14 +88,3 @@ class RandDict(object):
         if max(self.__frequencies().values()) <= self.__max_freq:
           if self.max_sequence()[0] <= self.__max_seq:
             break
-
-
-if __name__ == '__main__':
-  dictionary = {"apple": 10, "banana": 20, "orange": 30, "kiwi": 40}
-  weight_list = [1, 2, 3, 4]
-
-  test = RandDict(dictionary, weight_list, 3)
-
-  for _ in range(20):
-    test.pop()
-    print(test)

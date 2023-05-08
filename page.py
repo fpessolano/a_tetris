@@ -6,7 +6,11 @@ import repeat_event as rpe
 
 
 class Static:
-
+  """
+    This is a class that can be used to build static pages such as
+    welcomme and controls pages.
+    """
+  
   def __init__(self,
                width=60,
                height=20,
@@ -26,9 +30,11 @@ class Static:
     curses.noecho()
     self.__stdscr.nodelay(True)
     self.__stdscr.clear()
+    self.__stdscr.refresh()
 
   def __del__(self):
     self.__stdscr.clear()
+    self.__stdscr.refresh()
     if self.__delete:
       curses.endwin()
 
@@ -128,6 +134,7 @@ class Static:
 
   def clear(self, keep_border=True):
     self.__stdscr.clear()
+    self.__stdscr.refresh()
     self.__text, self.__animated_text, self.__overlapping_text = [], [], []
     if keep_border:
       self.draw_border()
