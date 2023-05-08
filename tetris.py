@@ -6,11 +6,9 @@ import constants as c
 
 
 class Tetris:
-  # frame_pause needs to accelerate towards the end of the level
-  # add splash screen for new level
-  # change color when approaching the level end
-  def __init__(self, width=10, height=15):
-    self.__frame = graphics.Frame(width, height)
+
+  def __init__(self, screen, width=10, height=15):
+    self.__frame = graphics.Frame(width=width, height=height, screen=screen)
     self.__frame.print_board()
     self.__stdscr, _, self.__board_padding = self.__frame.stdscr()
     self.__width = width
@@ -22,9 +20,6 @@ class Tetris:
     self.__shape = sp.Shapes(self.__level)
     self.__stdscr.keypad(True)
     self.__stdscr.nodelay(True)
-
-  def __del__(self):
-    del(self.__frame)
 
   def drop_new_shape(self):
     x = self.__width // 2
@@ -38,13 +33,11 @@ class Tetris:
     self.__frame.print_board()
     self.__frame.print_score(self.__score)
     self.__frame.line_count(self.__line_count)
-    if self.__score > c.LEVEL_THRESHOLD[self.__level]:
+    if self.__level < len(c.LEVEL_THRESHOLD) \
+      and self.__score > c.LEVEL_THRESHOLD[self.__level]:
       self.__shape.level_up()
       self.__level += 1
       self.__frame_pause = c.LEVEL_SPEED[self.__level]
-    # else:
-    #   color control TBD
-    #   score_to_levelup =  c.LEVEL_THRESHOLD[self.__level] - self.__score
     self.__frame.print_level(self.__level)
     self.__frame.print_next_shape(self.__shape.next_object())
 
@@ -76,8 +69,6 @@ class Tetris:
           y += 1
           self.__frame[x, y] = [True, self.__shape.object()]
         elif key == 27:
-          del self.__frame
-          print("Thanks for playing the pre-beta")
           return False
         elif key == 32:
           self.__frame.pause()
@@ -88,7 +79,6 @@ class Tetris:
               break
       if not self.__frame.shape_fits(self.__shape.object(), [x, y + 1]):
         if y == 0:
-          self.game_over()
           return False
         else:
           break
@@ -98,7 +88,5 @@ class Tetris:
     next(self.__shape)
     return True
 
-  def game_over(self):
-    del(self.__frame)
-    print("GAMEOVER! Thanks for playing the pre-beta.")
-    print(f'Your score is {self.__score} and your level is {self.__level}')
+  def score(self):
+    return self.__score, {self.__level}

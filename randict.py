@@ -35,9 +35,11 @@ class RandDict(object):
   def pop(self):
     retval = self.__frame[0]
     if len(set(self.__frame).difference(set(self.__frame[1:]))) > 0:
+      self.__frame = self.__frame[1:]
       self.fill(False)
     else:
       self.__frame = self.__frame[1:]
+
     return retval, self.__od[retval]
 
   def peek(self):
@@ -57,17 +59,17 @@ class RandDict(object):
     }
 
   def max_sequence(self):
-    longest = (1, 0)  
-    current = (1, 0)  
+    longest = (1, 0)
+    current = (1, 0)
     for i in range(1, len(self.__frame)):
-        if self.__frame[i] == self.__frame[i - 1]:
-            current = (current[0] + 1, current[1])
-        else:
-            if current[0] > longest[0]:
-                longest = current
-            current = (1, i)
+      if self.__frame[i] == self.__frame[i - 1]:
+        current = (current[0] + 1, current[1])
+      else:
+        if current[0] > longest[0]:
+          longest = current
+        current = (1, i)
     if current[0] > longest[0]:
-        longest = current
+      longest = current
     return longest
 
   def fill(self, force_reset=True):
@@ -93,4 +95,7 @@ if __name__ == '__main__':
   weight_list = [1, 2, 3, 4]
 
   test = RandDict(dictionary, weight_list, 3)
-  print(test)
+
+  for _ in range(20):
+    test.pop()
+    print(test)

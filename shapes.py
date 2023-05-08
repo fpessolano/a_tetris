@@ -58,6 +58,6 @@ if __name__ == '__main__':
   shapes.level_up()
   print(shapes.object())
   print()
-  for _ in range(4):
+  for _ in range(30):
     next(shapes)
     print(shapes.object())

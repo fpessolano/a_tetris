@@ -17,7 +17,7 @@ See poetry.lock but be aware that this is bloated with things not needed but as 
 Run main.py (simply RUN in replit)
 
 **Known BUGS**  
- - n/a
+ - there is a nasty bug resulting in the same shape coming out
 
 
 

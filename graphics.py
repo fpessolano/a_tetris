@@ -3,12 +3,13 @@ import curses
 
 class Frame:
 
-  def __init__(self, width, height, padding=[15, 3]):
+  def __init__(self, width, height, padding=[15, 3], screen=None):
     self.__width = width
     self.__height = height
     self.__paddings = [max(15, padding[0]), max(3, padding[1])]
     self.__background = [[0 for i in range(width)] for j in range(height)]
-    self.__stdscr = curses.initscr()
+    self.__stdscr = screen if screen else curses.initscr()
+    self.__delete = False if screen else True
     curses.cbreak()
     curses.curs_set(0)
     curses.noecho()
@@ -86,7 +87,9 @@ class Frame:
     self.__stdscr.refresh()
 
   def __del__(self):
-    curses.endwin()
+    self.__stdscr.clear()
+    if self.__delete:
+      curses.endwin()
 
   def background(self):
     return self.__background
