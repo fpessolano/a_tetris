@@ -21,7 +21,7 @@ Run main.py
 
 **To be added**  
  - Some minimal colors
- - Sounds (not working on replit)
+ - Sounds (windows only)
 
 
 
