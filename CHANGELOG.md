@@ -9,8 +9,7 @@ All notable changes to this project will be documented in this file.
  - n/a
 
 #### Added
- - Score coloring near level-up (TBD)
- - Beep sounds (in progress)
+ - Game sounds
 
 
 ## [0.5.2]

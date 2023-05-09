@@ -41,7 +41,7 @@ while True:
         pass
 
     sounds.stop_music()
-    sounds.gameover()
+    sounds.gameover.play()
     screen.clear()
     screen.refresh()
     score, level = new_game.score()
@@ -56,9 +56,10 @@ while True:
     static_page.draw()
     option = static_page.getch([ord("p"), ord("q")])
     static_page.clear(False)
-    sounds.play_music()
     if option == ord("q"):
         break
+    sounds.gameover.stop()
+    sounds.play_music()
 
 static_page.clear(False)
 curses.endwin()  # type: ignore
