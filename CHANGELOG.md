@@ -1,6 +1,18 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.6.2]
+#### Fixed 
+ - n/a
+
+#### Changed 
+ - n/a
+
+#### Added
+ - Score coloring near level-up (TBD)
+ - Beep sounds (in progress)
+
+
 ## [0.5.2]
 #### Fixed 
  - Added curses.refresh in some missing code parts after a curses.clear command
@@ -9,10 +21,8 @@ All notable changes to this project will be documented in this file.
  - Most test code has been deleted
 
 #### Added
- - Score coloring near level-up (TBD)
  - More levels
  - More shapes
- - Beep sounds (TBD - off replit only)
  - Proper end screen with play again
  - Some code commenting has been added
 

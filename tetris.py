@@ -10,8 +10,9 @@ class Tetris:
     This is the game core loop (including control and any additional logic).
     """
   
-  def __init__(self, screen, width=10, height=15):
+  def __init__(self, screen, sounds, width=10, height=15):
     self.__frame = graphics.Frame(width=width, height=height, screen=screen)
+    self.__sounds = sounds
     self.__frame.print_board()
     self.__stdscr, _, self.__board_padding = self.__frame.stdscr()
     self.__width = width
@@ -49,24 +50,24 @@ class Tetris:
       end_time = time.time() + self.__frame_pause
       while time.time() < end_time:
         key = self.__stdscr.getch()
-        if key == curses.KEY_LEFT and self.__frame.shape_fits(
+        if key == curses.KEY_LEFT and self.__frame.shape_fits( # type: ignore
             self.__shape.object(), [x - 1, y]):
           self.__frame[x, y] = [False, self.__shape.object()]
           x -= 1
           self.__frame[x, y] = [True, self.__shape.object()]
-        elif key == curses.KEY_RIGHT and self.__frame.shape_fits(
+        elif key == curses.KEY_RIGHT and self.__frame.shape_fits( # type: ignore
             self.__shape.object(), [x + 1, y]):
           self.__frame[x, y] = [False, self.__shape.object()]
           x += 1
           self.__frame[x, y] = [True, self.__shape.object()]
-        elif key == curses.KEY_UP:
+        elif key == curses.KEY_UP: # type: ignore
           previous_object = self.__shape.object()
           if self.__frame.shape_fits(self.__shape.next(), [x, y]):
             self.__frame[x, y] = [False, previous_object]
             self.__frame[x, y] = [True, self.__shape.object()]
           else:
             self.__shape.prev()
-        elif key == curses.KEY_DOWN and self.__frame.shape_fits(
+        elif key == curses.KEY_DOWN and self.__frame.shape_fits( # type: ignore
             self.__shape.object(), [x, y + 1]):
           self.__frame[x, y] = [False, self.__shape.object()]
           y += 1
