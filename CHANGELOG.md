@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
  - n/a
 
 #### Changed 
- - n/a
+ - unified requirement.txt
 
 #### Added
  - Game sounds
