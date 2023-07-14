@@ -17,7 +17,7 @@ See requirememts and requirememts_txt.
 Run main.py 
 
 **Known BUGS**  
- - n/a
+ - when completing the line the next shape is randomly changed
 
 **Notes**  
  - The game can be run in REPLIT, however sounds will not work and it might be sluggish due to REPLIT performanmce throttling.
