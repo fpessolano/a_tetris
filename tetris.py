@@ -44,6 +44,7 @@ class Tetris:
         self.__frame.print_board()
         self.__frame.print_score(self.__score)
         self.__frame.line_count(self.__line_count)
+        # BUG: when level goes up the object buffet is reset and the next shape is not what shown
         if (
             self.__level < len(c.LEVEL_THRESHOLD)
             and self.__score > c.LEVEL_THRESHOLD[self.__level]
