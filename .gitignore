@@ -1,4 +1,6 @@
 __pycache__/*
 replit.nix
+poetry*
 .replit
 .vscode/settings.json
+pyproject.toml
