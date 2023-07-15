@@ -1,12 +1,13 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [0.6.2]
+## [0.6.3]
 #### Fixed 
  - n/a
 
 #### Changed 
  - unified requirement.txt
+ - bug fixed al level up with next shgape being wrong
 
 #### Added
  - Game sounds

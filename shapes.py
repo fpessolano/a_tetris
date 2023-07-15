@@ -42,7 +42,7 @@ class Shapes:
         c.LEVEL_WEIGHTS[self.__level][x] for x in list(c.OBJECTS.keys())
       ]
       self.__objects = rd.RandDict(c.OBJECTS, level_weights, 3)
-      _, self.__current_object = self.__objects.pop()
+      # _, self.__current_object = self.__objects.pop()
       self.__cursor = random.randint(0, len(self.__current_object) - 1)
       _, self.__next_object = self.__objects.peek()
       self.__cursor_next_object = random.randint(0,

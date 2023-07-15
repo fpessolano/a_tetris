@@ -1,7 +1,7 @@
 # A_TETRIS 
 About:      an ASCII-based tetris game 
 Author:     F. Pessolano  
-Version:    v.0.6.2
+Version:    v.0.6.3
 
 NOTE:       Best played NOT on replit  
 
@@ -17,7 +17,7 @@ See requirememts and requirememts_txt.
 Run main.py 
 
 **Known BUGS**  
- - when going up a level the next shape is randomly changed
+ - n/a
 
 **Notes**  
  - The game can be run in REPLIT, however sounds will not work and it might be sluggish due to REPLIT performanmce throttling.
