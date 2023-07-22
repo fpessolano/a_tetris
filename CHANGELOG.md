@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.6.4]
+#### Fixed 
+ - removed some typos
+
 ## [0.6.3]
 #### Fixed 
  - n/a

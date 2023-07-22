@@ -3,7 +3,7 @@ import page
 import curses
 import sounds as sounds
 
-VERSION = "v.0.6.3"
+VERSION = "v.0.6.4"
 
 screen = curses.initscr()  # type: ignore
 sounds = sounds.Bit8()
