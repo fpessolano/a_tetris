@@ -1,6 +1,5 @@
 import random
 import time
-import math
 
 
 class RandDict(object):
@@ -34,7 +33,8 @@ class RandDict(object):
 
   def pop(self):
     retval = self.__frame[0]
-    if len(set(self.__frame).difference(set(self.__frame[1:]))) > 0:
+    # Check if the item being removed is the last of its kind
+    if retval not in self.__frame[1:]:
       self.__frame = self.__frame[1:]
       self.fill(False)
     else:
@@ -54,7 +54,7 @@ class RandDict(object):
         freq_dict[item] = 1
     total = sum(freq_dict.values())
     return {
-      key: math.trunc(value * 10 / total) / 10
+      key: (value * 10 // total) / 10
       for key, value in freq_dict.items()
     }
 

@@ -34,6 +34,17 @@ LEVEL_THRESHOLD = [100, 200, 500, 750, 1000, 1500, 2000]
 # delayes below 0.4 seesm to create a problem ...
 LEVEL_SPEED = [0.6, 0.6, 0.6, 0.6, 0.4, 0.4, 0.4, 0.2]
 
+# Score values for different line clears
+SCORE_SINGLE = 40
+SCORE_DOUBLE_BONUS = 60  
+SCORE_TRIPLE_BONUS = 200
+SCORE_TETRIS_BONUS = 900
+
+# Display constants
+BLOCK_FILLED = "[]"
+BLOCK_EMPTY = "  "
+BLOCK_SPACING = 3
+
 # Levels are defined by giving a weight in the randomness of each shape
 LEVEL_WEIGHTS = {
     0: {

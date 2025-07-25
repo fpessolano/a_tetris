@@ -1,10 +1,25 @@
 import curses
+import constants as c
 
 
 class Frame:
   """
     This is a class that handles the drawing in console of each frame.
     """
+  
+  def _safe_addstr(self, y, x, text):
+    """Safely add string to screen with bounds checking"""
+    try:
+      self.__stdscr.addstr(y, x, text)
+    except curses.error:
+      pass  # Ignore out-of-bounds errors
+  
+  def _safe_move(self, y, x):
+    """Safely move cursor with bounds checking"""
+    try:
+      self.__stdscr.move(y, x)
+    except curses.error:
+      pass
   
   def __init__(self, width, height, padding=[15, 3], screen=None):
     self.__width = width
@@ -27,13 +42,13 @@ class Frame:
       self.__stdscr.addstr("<!")
       for x in range(self.__width):
         if self.__background[y][x] == 1:
-          self.__stdscr.addstr("[].")
+          self.__stdscr.addstr(c.BLOCK_FILLED + ".")
         else:
-          self.__stdscr.addstr("  .")
+          self.__stdscr.addstr(c.BLOCK_EMPTY + ".")
       self.__stdscr.addstr("!>")
     self.__stdscr.move(self.__paddings[1] + self.__height,
                        self.__paddings[0] + 2)
-    self.__stdscr.addstr("".join(["=" for i in range(3 * self.__width)]))
+    self.__stdscr.addstr("".join(["=" for i in range(c.BLOCK_SPACING * self.__width)]))
 
   def print_score(self, score):
     self.__stdscr.move(self.__paddings[1] + 1, 2)
@@ -44,19 +59,19 @@ class Frame:
 
   def print_level(self, level):
     self.__stdscr.move(self.__paddings[1] + 1,
-                       self.__paddings[0] + 3 * self.__width + 8)
+                       self.__paddings[0] + c.BLOCK_SPACING * self.__width + 8)
     self.__stdscr.addstr("LEVEL")
     self.__stdscr.move(self.__paddings[1] + 3,
-                       self.__paddings[0] + 3 * self.__width + 10)
+                       self.__paddings[0] + c.BLOCK_SPACING * self.__width + 10)
     self.__stdscr.addstr(str(level))
     self.__stdscr.refresh()
 
   def line_count(self, count):
     self.__stdscr.move(self.__paddings[1] + 5,
-                       self.__paddings[0] + 3 * self.__width + 8)
+                       self.__paddings[0] + c.BLOCK_SPACING * self.__width + 8)
     self.__stdscr.addstr("LINES")
     self.__stdscr.move(self.__paddings[1] + 7,
-                       self.__paddings[0] + 3 * self.__width + 10)
+                       self.__paddings[0] + c.BLOCK_SPACING * self.__width + 10)
     self.__stdscr.addstr(str(count))
     self.__stdscr.refresh()
 
@@ -69,7 +84,7 @@ class Frame:
     else:
       text = "      "
     self.__stdscr.move(self.__paddings[1] + 10,
-                       self.__paddings[0] + 3 * self.__width + 8)
+                       self.__paddings[0] + c.BLOCK_SPACING * self.__width + 8)
     self.__stdscr.addstr(text)
     self.__stdscr.refresh()
 
@@ -84,12 +99,13 @@ class Frame:
       for x in range(len(shape[y])):
         self.__stdscr.move(self.__paddings[1] + 7 + y, 2 + x * 2)
         if shape[y][x]:
-          self.__stdscr.addstr("[]")
+          self.__stdscr.addstr(c.BLOCK_FILLED)
         else:
-          self.__stdscr.addstr("  ")
+          self.__stdscr.addstr(c.BLOCK_EMPTY)
     self.__stdscr.refresh()
 
-  def __del__(self):
+  def cleanup(self):
+    """Explicit cleanup method to be called when done with the frame"""
     self.__stdscr.clear()
     self.__stdscr.refresh()
     if self.__delete:
@@ -103,23 +119,26 @@ class Frame:
         value) == 0:
       return
     mark, shape = value
-    block = "[]" if mark else "  "
+    block = c.BLOCK_FILLED if mark else c.BLOCK_EMPTY
     for y, line in enumerate(shape):
       for x, el in enumerate(line):
         if (y + coords[1]) < self.__height and (x + coords[0]) < self.__width:
           self.__stdscr.move(coords[1] + self.__paddings[1] + y,
-                             (coords[0] + x) * 3 + self.__paddings[0] + 2)
+                             (coords[0] + x) * c.BLOCK_SPACING + self.__paddings[0] + 2)
           if el:
             self.__stdscr.addstr(block)
     self.__stdscr.refresh()
 
   def __getitem__(self, coords):
     x, y = coords
-    if self.__stdscr.inch(self.__paddings[1] + y,
-                          self.__paddings[0] + 2 + x * 3) == 32:
-      return 0
-    else:
-      return 1
+    try:
+      if self.__stdscr.inch(self.__paddings[1] + y,
+                            self.__paddings[0] + 2 + x * c.BLOCK_SPACING) == 32:
+        return 0
+      else:
+        return 1
+    except curses.error:
+      return 0  # Return empty if out of bounds
 
   def shape_fits(self, shape, coords):
     if coords[0] + len(shape[0]) > self.__width or \
@@ -144,8 +163,8 @@ class Frame:
       if all(item == 1 for item in self.__background[y]):
         for x in range(self.__width):
           self.__stdscr.move(self.__paddings[1] + y,
-                             self.__paddings[0] + 2 + x * 3)
-          self.__stdscr.addstr("  .")
+                             self.__paddings[0] + 2 + x * c.BLOCK_SPACING)
+          self.__stdscr.addstr(c.BLOCK_EMPTY + ".")
         deleted_rows += 1
       else:
         bck_copy.append(self.__background[y])

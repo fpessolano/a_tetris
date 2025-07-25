@@ -36,15 +36,14 @@ class Tetris:
             self.__sounds.points.play()
         self.__line_count += deleted_rows
         self.__score += (
-            40 * deleted_rows
-            + 60 * max(0, (deleted_rows - 1))
-            + 200 * max(0, (deleted_rows - 2))
-            + 900 * max(0, (deleted_rows - 3))
+            c.SCORE_SINGLE * deleted_rows
+            + c.SCORE_DOUBLE_BONUS * max(0, (deleted_rows - 1))
+            + c.SCORE_TRIPLE_BONUS * max(0, (deleted_rows - 2))
+            + c.SCORE_TETRIS_BONUS * max(0, (deleted_rows - 3))
         )
         self.__frame.print_board()
         self.__frame.print_score(self.__score)
         self.__frame.line_count(self.__line_count)
-        # BUG: when level goes up the object buffet is reset and the next shape is not what shown
         if (
             self.__level < len(c.LEVEL_THRESHOLD)
             and self.__score > c.LEVEL_THRESHOLD[self.__level]
