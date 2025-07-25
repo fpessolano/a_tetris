@@ -2,7 +2,7 @@
 
 **About:** An ASCII-based Tetris game  
 **Author:** F. Pessolano  
-**Version:** v.0.6.4  
+**Version:** v.0.7.0  
 
 ## Description
 This is a Python project initially started to teach Python programming in a fun and engaging way. The game recreates the classic Tetris experience using only ASCII art and the Python `curses` module for terminal-based gameplay.
@@ -56,7 +56,7 @@ python main.py
 - **High Scores:** Top 8 scores saved with player initials, level, and date
 - **Records:** Only scores above 0 qualify for high score table
 
-## Recent Improvements (v.0.6.4)
+## Recent Improvements (v.0.7.0)
 - ✅ **Added high score system** with top 8 records and player initials
 - ✅ **Enhanced menu navigation** with consistent options across all screens
 - ✅ **Improved user interface** with records page and better controls display

@@ -1,6 +1,27 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.7.0] - 2025-07-25
+#### Added
+- **High Score System**: Comprehensive top 8 high score tracking with player initials, level, and date
+- **Records Management**: Persistent JSON-based score storage with automatic sorting
+- **Interactive Menu System**: Consistent navigation options (P/C/R/Q) across all screens
+- **Records Page**: Dedicated high score display with formatted table
+- **Initials Input**: User-friendly interface for entering player initials after achieving high scores
+- **Quit Option**: Available from any screen without requiring gameplay
+- **Enhanced Controls Display**: Clear separation of in-game and menu navigation controls
+
+#### Fixed
+- **Zero Score Prevention**: Scores of 0 or below are no longer recorded in high score table
+- **Menu Navigation**: Removed problematic Ctrl+C handling that caused restart issues
+- **User Experience**: Improved clarity of initials input with better instructions
+
+#### Changed
+- **Game Flow**: Enhanced navigation between game, records, controls, and quit options
+- **Documentation**: Updated README.md with comprehensive feature list and controls
+- **File Structure**: Added records.py module for high score management
+- **UI Consistency**: Standardized option prompts across all screens
+
 ## [0.6.4]
 #### Fixed 
  - removed some typos

@@ -5,7 +5,7 @@ import sounds as sounds
 import records
 import sys
 
-VERSION = "v.0.6.4"
+VERSION = "v.0.7.0"
 
 
 screen = curses.initscr()  # type: ignore
