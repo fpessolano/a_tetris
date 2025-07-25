@@ -88,7 +88,7 @@ class Tetris:
                     self.__frame[x, y] = [True, self.__shape.object()]
                     self.__sounds.drop.stop()
                     self.__sounds.drop.play()
-                elif key == 27:
+                elif key == 27 or key == ord('e'):  # ESC or 'e' key
                     return False
                 elif key == 32:
                     self.__frame.pause()
@@ -97,6 +97,8 @@ class Tetris:
                         if key == 32:
                             self.__frame.pause(False)
                             break
+                        elif key == 27 or key == ord('e'):  # ESC or 'e' key during pause
+                            return False
             if not self.__frame.shape_fits(self.__shape.object(), [x, y + 1]):
                 if y == 0:
                     return False

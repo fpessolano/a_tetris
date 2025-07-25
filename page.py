@@ -138,3 +138,118 @@ class Static:
     self.__text, self.__animated_text, self.__overlapping_text = [], [], []
     if keep_border:
       self.draw_border()
+
+  def display_records(self, scores, title="HIGH SCORES", show_options=True):
+    """Display high scores in a formatted table"""
+    self.clear()
+    self.draw_border()
+    
+    # Display title
+    self.centred_text_atY(2, title, True)
+    
+    if not scores:
+      self.centred_text_atY(8, "No records yet!")
+      self.centred_text_atY(9, "Be the first to set a high score!")
+    else:
+      # Table headers
+      self.centred_text_atY(4, "RANK  INITIALS  SCORE    LEVEL  DATE")
+      self.centred_text_atY(5, "=" * 40)
+      
+      # Display each score
+      for i, record in enumerate(scores[:8]):  # Show top 8
+        rank = str(i + 1).rjust(2)
+        initials = record['initials'].ljust(8)
+        score = str(record['score']).rjust(8)
+        level = str(record['level']).rjust(5)
+        date = record['date']
+        
+        line = f" {rank}.   {initials} {score}    {level}   {date}"
+        self.centred_text_atY(7 + i, line)
+    
+    # Instructions
+    if show_options:
+      self.add_overlapping_text(0, 17, "Press p to play")
+      self.add_overlapping_text(0, 17, "Press c for controls")
+      self.add_overlapping_text(0, 17, "Press q to quit")
+    else:
+      self.add_overlapping_text(0, 17, "Press any key to continue")
+    self.draw()
+
+  def get_player_initials(self, prompt="Enter your initials (3 chars):"):
+    """Get player initials for high score entry"""
+    self.clear()
+    self.draw_border()
+    
+    self.centred_text_atY(6, "NEW HIGH SCORE!")
+    self.centred_text_atY(8, prompt)
+    self.centred_text_atY(10, "Type up to 3 letters and press ENTER")
+    self.centred_text_atY(11, "Press ENTER alone for blank initials")
+    
+    # Show input area
+    max_y, max_x = self.__stdscr.getmaxyx()
+    input_y = max_y // 2 + 1
+    input_x = (max_x - 10) // 2
+    
+    self.centred_text_atY(input_y - 1, "Initials: [___]")
+    
+    # Draw all the text first
+    self.draw()
+    
+    # Enable cursor and echo for input
+    curses.curs_set(1)
+    curses.noecho()
+    self.__stdscr.nodelay(False)
+    
+    # Position cursor for input (inside the brackets)
+    bracket_x = (max_x - 3) // 2
+    self.__stdscr.move(input_y - 1, bracket_x)
+    self.__stdscr.refresh()
+    
+    # Get input (up to 3 characters)
+    initials = ""
+    while len(initials) < 3:
+      try:
+        ch = self.__stdscr.getch()
+        if ch == 27:  # ESC key
+          initials = "AAA"  # Default initials
+          break
+        elif ch == ord('\n') or ch == ord('\r'):
+          # Allow ENTER with any length (including 0 for blank)
+          break
+        elif ch == curses.KEY_BACKSPACE or ch == 127 or ch == 8:
+          if len(initials) > 0:
+            initials = initials[:-1]
+            # Clear the character and move cursor back
+            self.__stdscr.move(input_y - 1, bracket_x + len(initials))
+            self.__stdscr.addstr("_")
+            self.__stdscr.move(input_y - 1, bracket_x + len(initials))
+        elif 32 <= ch <= 126:  # Printable characters
+          if len(initials) < 3:
+            char = chr(ch).upper()
+            # Only allow letters
+            if char.isalpha():
+              initials += char
+              self.__stdscr.addstr(char)
+        
+        self.__stdscr.refresh()
+      except KeyboardInterrupt:
+        # Handle Ctrl+C - restore settings and re-raise
+        curses.curs_set(0)
+        curses.noecho()
+        self.__stdscr.nodelay(True)
+        raise
+      except:
+        break
+    
+    # Restore cursor settings
+    curses.curs_set(0)
+    curses.noecho()
+    self.__stdscr.nodelay(True)
+    
+    # Handle blank initials or pad to 3 characters
+    if len(initials) == 0:
+      initials = "   "  # Three spaces for blank
+    elif len(initials) < 3:
+      initials = initials.ljust(3, ' ')  # Pad with spaces
+    
+    return initials[:3].upper()
