@@ -4,3 +4,6 @@ poetry*
 .replit
 .vscode/settings.json
 pyproject.toml
+.DS_Store
+.breakpoints
+venv/
